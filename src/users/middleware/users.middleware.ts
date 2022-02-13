@@ -25,9 +25,7 @@ class UsersMiddleware {
     res: Response,
     next: NextFunction
   ) {
-    const user = await userService.getUserByEmail(req.body.email);
-
-    if (user && user._id === req.params.userId) {
+    if (res.locals.user._id === req.params.userId) {
       next();
     } else {
       res.status(400).send({ error: `Invalid email` });
@@ -52,6 +50,7 @@ class UsersMiddleware {
     const user = await userService.readById(req.params.userId);
 
     if (user) {
+      res.locals.user = user;
       next();
     } else {
       res.status(404).send({

@@ -1,3 +1,11 @@
+import dotenv from "dotenv";
+
+const dotenvResult = dotenv.config();
+
+if (dotenvResult.error) {
+  throw dotenvResult.error;
+}
+
 import express, { Application, Request, Response, json } from "express";
 import { createServer } from "http";
 import type { Server } from "http";
@@ -11,6 +19,7 @@ import debug from "debug";
 import type { IDebugger } from "debug";
 
 import { CommonRoutesConfig } from "./common/common.routes.config";
+import { AuthRoutes } from "./auth/auth.routes.config";
 import { UsersRoutes } from "./users/users.routes.config";
 
 const app: Application = express();
@@ -37,6 +46,7 @@ if (!process.env.DEBUG) {
 
 app.use(logger(loggerOptions));
 
+routes.push(new AuthRoutes(app));
 routes.push(new UsersRoutes(app));
 
 const runningMessage = `Server running at http://localhost:${port}`;
