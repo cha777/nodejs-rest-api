@@ -4,7 +4,7 @@
   "description": "Node js REST API",
   "main": "src/app.ts",
   "scripts": {
-    "start": "tsc && node ./dist/app.js",
+    "start": "tsc && node ./build/app.js",
     "debug": "export DEBUG=* && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
