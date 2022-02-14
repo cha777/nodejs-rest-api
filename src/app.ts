@@ -25,7 +25,7 @@ import { UsersRoutes } from "./users/users.routes.config";
 
 const app: Application = express();
 const server: Server = createServer(app);
-const port = 4000;
+const port = process.env.PORT || 4000;
 const routes: Array<CommonRoutesConfig> = [];
 const debugLog: IDebugger = debug("app");
 

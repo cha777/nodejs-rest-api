@@ -70,7 +70,7 @@ describe("users and auth endpoints", function () {
   });
 
   describe("with a valid access token", function () {
-    it("should allow a GET from /users", async function () {
+    it("should disallow a GET to /users", async function () {
       const res = await request
         .get(`/users`)
         .set({ Authorization: `Bearer ${accessToken}` })
