@@ -4,6 +4,7 @@ import debug from "debug";
 import type { IDebugger } from "debug";
 
 import usersService from "../services/users.service";
+import { PatchUserDto } from "../dto/patch.user.dto";
 
 const log: IDebugger = debug("app:users-controller");
 
@@ -40,6 +41,15 @@ class UsersController {
 
   async removeUser(req: Request, res: Response) {
     log(await usersService.deleteById(req.body.id));
+    res.status(204).send();
+  }
+
+  async updatePermissionFlags(req: Request, res: Response) {
+    const patchUserDto: PatchUserDto = {
+      permissionFlags: parseInt(req.params.permissionFlags),
+    };
+
+    log(await usersService.patchById(req.body.id, patchUserDto));
     res.status(204).send();
   }
 }

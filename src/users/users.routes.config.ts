@@ -83,6 +83,17 @@ export class UsersRoutes extends CommonRoutesConfig {
       UsersController.patch,
     ]);
 
+    if (typeof global.it === "function") {
+      this.app.put(`/users/:userId/permissionFlags/:permissionFlags`, [
+        jwtMiddleware.validJWTNeeded,
+        permissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+        permissionMiddleware.permissionFlagRequired(
+          PermissionFlag.FREE_PERMISSION
+        ),
+        UsersController.updatePermissionFlags,
+      ]);
+    }
+
     return this.app;
   }
 }

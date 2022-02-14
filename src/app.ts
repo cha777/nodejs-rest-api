@@ -42,6 +42,10 @@ const loggerOptions: LoggerOptions = {
 
 if (!process.env.DEBUG) {
   loggerOptions.meta = false;
+
+  if (typeof global.it === "function") {
+    loggerOptions.level = "http"; // for non-debug test runs, squelch entirely
+  }
 }
 
 app.use(logger(loggerOptions));
@@ -55,7 +59,7 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).send(runningMessage);
 });
 
-server.listen(port, () => {
+export default server.listen(port, () => {
   routes.forEach((route: CommonRoutesConfig) => {
     debugLog(`Routes configured for ${route.getName()}`);
   });
