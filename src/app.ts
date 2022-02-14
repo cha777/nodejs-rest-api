@@ -9,12 +9,13 @@ if (dotenvResult.error) {
 import express, { Application, Request, Response, json } from "express";
 import { createServer } from "http";
 import type { Server } from "http";
+import helmet from "helmet";
+import cors from "cors";
 
 import { format, transports } from "winston";
 import { logger } from "express-winston";
 import type { LoggerOptions } from "express-winston";
 
-import cors from "cors";
 import debug from "debug";
 import type { IDebugger } from "debug";
 
@@ -30,6 +31,7 @@ const debugLog: IDebugger = debug("app");
 
 app.use(json());
 app.use(cors());
+app.use(helmet());
 
 const loggerOptions: LoggerOptions = {
   transports: [new transports.Console()],
